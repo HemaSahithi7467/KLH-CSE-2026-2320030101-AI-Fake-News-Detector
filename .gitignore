@@ -1,0 +1,6 @@
+data/Fake.csv
+data/True.csv
+data/combined_dataset.csv
+models/*.pkl
+__pycache__/
+*.pyc
