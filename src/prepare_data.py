@@ -1,8 +1,18 @@
 import pandas as pd
+import re
+
+def clean_text(text):
+    text = re.sub(r'^.*?\(Reuters\)\s*-\s*', '', str(text))
+    text = re.sub(r'\(Reuters\)', '', text)
+    return text
 
 # Load both files
 fake_df = pd.read_csv("data/Fake.csv")
 true_df = pd.read_csv("data/True.csv")
+
+# Clean text: remove Reuters dateline tags so the model can't "cheat" on this shortcut
+fake_df["text"] = fake_df["text"].apply(clean_text)
+true_df["text"] = true_df["text"].apply(clean_text)
 
 # Add label column: 1 = real, 0 = fake
 fake_df["label"] = 0
